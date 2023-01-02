@@ -22,9 +22,6 @@ echo '<nav class="navbar navbar-expand-lg navbar-light bg-light">
         }
         if($loggedin){
         echo '<li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-      </li>
-        <li class="nav-item">
           <a class="nav-link" href="reso.php">Resolutions</a>
         </li>
         <li class="nav-item">
