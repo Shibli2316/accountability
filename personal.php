@@ -41,8 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $id = $_POST['idEdit'];
         $title = $_POST['titleEdit'];
+        $title = mysqli_real_escape_string($conn,$title);
         $goal = $_POST['goalEdit'];
-
+        $goal = mysqli_real_escape_string($conn, $goal);
+        
         // SQL query to be executed
 
         $sql = "UPDATE `pdg` SET `title`= '$title' , `goal`= '$goal' WHERE `pdg`.`id`=$id";
@@ -54,9 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     } else {
         // insert  the record
-
+        
         $title = $_POST['title'];
+        $title = mysqli_real_escape_string($conn,$title);
         $goal = $_POST['goal'];
+        $goal = mysqli_real_escape_string($conn, $goal);
 
         // SQL query to be executed
 

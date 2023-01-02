@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $id = $_POST['idEdit'];
         $reso = $_POST['resoEdit'];
+        $reso = mysqli_real_escape_string($conn, $reso);
         $completeBy = $_POST['completeByEdit'];
 
         // SQL query to be executed
@@ -56,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // insert  the record
 
         $reso = $_POST['reso'];
+        $reso = mysqli_real_escape_string($conn, $reso);
         $completeBy = $_POST['completeBy'];
 
         // SQL query to be executed

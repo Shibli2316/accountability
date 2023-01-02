@@ -41,8 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $id = $_POST['idEdit'];
         $reso = $_POST['resoEdit'];
+        $reso = mysqli_real_escape_string($conn, $reso);
         
-
+        
         // SQL query to be executed
 
         $sql = "UPDATE `reso` SET `reso`= '$reso' WHERE `reso`.`id`=$id";
@@ -54,8 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     } else {
         // insert  the record
-
+        
         $reso = $_POST['reso'];
+        $reso = mysqli_real_escape_string($conn, $reso);
 
         // SQL query to be executed
 
@@ -104,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <h5 class="modal-title" id="editModalLabel">Edit Resolution</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="index.php" method="post">
+                <form action="reso.php" method="post">
                     <div class="modal-body">
                         <input type="hidden" name="idEdit" id="idEdit">
                         <div class="mb-3">
@@ -156,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ?>
     <div class="container my-4">
         <h2>Add your yearly resolution</h2>
-        <form action="index.php" method="post">
+        <form action="reso.php" method="post">
             <div class="mb-3">
                 <label for="reso" class="form-label">Resolution</label>
                 <input type="text" class="form-control" id="reso" aria-describedby="emailHelp" name="reso">
@@ -222,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if (confirm("Are you sure")) {
                     console.log("yes");
-                    window.location = `index.php?delete=${id}`;
+                    window.location = `reso.php?delete=${id}`;
                 } else {
                     console.log("no");
                 }
