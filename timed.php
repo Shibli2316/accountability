@@ -31,7 +31,7 @@ if (!$conn) {
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
     $delete = true;
-    $sql = "DELETE FROM `pdg` where `id`=$id ";
+    $sql = "DELETE FROM `monthly` where `id`=$id ";
     $result = mysqli_query($conn, $sql);
 }
 
@@ -40,12 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Update the record
 
         $id = $_POST['idEdit'];
-        $title = $_POST['titleEdit'];
-        $goal = $_POST['goalEdit'];
+        $reso = $_POST['resoEdit'];
+        $completeBy = $_POST['completeByEdit'];
 
         // SQL query to be executed
 
-        $sql = "UPDATE `pdg` SET `title`= '$title' , `goal`= '$goal' WHERE `pdg`.`id`=$id";
+        $sql = "UPDATE `monthly` SET `reso`= '$reso' , `completeBy`= '$completeBy' WHERE `monthly`.`id`=$id";
         $result = mysqli_query($conn, $sql);
         if ($result) {
             $update = true;
@@ -55,12 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         // insert  the record
 
-        $title = $_POST['title'];
-        $goal = $_POST['goal'];
+        $reso = $_POST['reso'];
+        $completeBy = $_POST['completeBy'];
 
         // SQL query to be executed
 
-        $sql = "INSERT INTO `pdg` (`username`, `title`, `goal`, `created`) VALUES ('$user', '$title', '$goal', current_timestamp())";
+        $sql = "INSERT INTO `monthly` (`username`, `reso`, `completeBy`, `time`) VALUES ('$user', '$reso', '$completeBy', current_timestamp())";
         $result = mysqli_query($conn, $sql);
 
         // Adding a new trip
@@ -105,17 +105,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <h5 class="modal-title" id="editModalLabel">Edit Goal</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="personal.php" method="post">
+                <form action="timed.php" method="post">
                     <div class="modal-body">
                         <input type="hidden" name="idEdit" id="idEdit">
                         <div class="mb-3">
-                            <label for="title" class="form-label">Goal Title</label>
-                            <input type="text" class="form-control" id="titleEdit" aria-describedby="emailHelp" name="titleEdit">
+                            <label for="reso" class="form-label">Goal Title</label>
+                            <input type="text" class="form-control" id="resoEdit" aria-describedby="emailHelp" name="resoEdit">
                         </div>
                         <div class="form-group">
                             <label for="desc">Goal Description</label>
-                            <input type="date">
-                            <textarea class="form-control" id="goalEdit" name="goalEdit" rows="10"></textarea>
+                            <input type="date" class="form-control" id="completeByEdit" name="completeByEdit">
                         </div>
                     </div>
                     <div class="modal-footer d-block mr-auto">
@@ -159,31 +158,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     ?>
 
-<!-- Quote Modal -->
-<div class="card text-center">
-  <div class="card-header">
-    Featured
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Quote of the day</h5>
-    <p class="card-text"><blockquote>If what is ahead scares you and what is behind hurts you, then look above. Allah will never fail to help you. &#x1F604;</blockquote></p>
-  </div>
-  <div class="card-footer text-muted">
-    You are doing great keep going. &#128077; 
-  </div>
-</div>
-
     <div class="container my-4">
-        <h2>Work on yourself</h2>
-        <form action="personal.php" method="post">
+        <h2>What are your timed goals</h2>
+        <form action="timed.php" method="post">
             <div class="mb-3">
-                <label for="title" class="form-label">Goal Title</label>
-                <input type="text" class="form-control" id="title" aria-describedby="emailHelp" name="title">
+                <label for="reso" class="form-label">Goal Title</label>
+                <input type="text" class="form-control" id="reso" aria-describedby="emailHelp" name="reso">
             </div>
             <div class="form-group">
-                <label for="desc">Describe your goal</label>
-                <input type="date" name="goal" id="goal" class="form-control">
-                <!-- <textarea class="form-control" id="goal" name="goal" rows="10"></textarea> -->
+                <label for="desc">By when will you complete it?</label>
+                <input type="date" name="completeBy" id="completeBy" class="form-control">
             </div>
             <button type="submit" class="btn btn-primary my-2">Add goal</button>
         </form>
@@ -195,14 +179,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <tr>
                     <th scope="col">S.No.</th>
                     <th scope="col">Goal</th>
-                    <th scope="col">Description</th>
+                    <th scope="col">Complete By</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
 
                 <?php
-                $sql = "SELECT * FROM `pdg` WHERE `username` = '$user'";
+                $sql = "SELECT * FROM `monthly` WHERE `username` = '$user'";
                 $result = mysqli_query($conn, $sql);
                 // echo var_dump($result);
                 $id = 0;
@@ -210,8 +194,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $id = $id + 1;
                     echo "<tr>
             <th scope='row'>" . $id . "</th>
-            <td>" . $row['title'] . "</td>
-            <td>" . $row['goal'] . "</td>
+            <td>" . $row['reso'] . "</td>
+            <td>" . $row['completeBy'] . "</td>
             <td> <button class='edit btn btn-sm btn-primary' id=" . $row['id'] . ">Edit</button> <button class='delete btn btn-sm btn-primary' id=d" . $row['id'] . ">Completed</button>  </td>
             </tr>";
                 }
@@ -229,11 +213,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             element.addEventListener("click", (e) => {
                 console.log("edit", );
                 tr = e.target.parentNode.parentNode;
-                title = tr.getElementsByTagName("td")[0].innerText;
-                goal = tr.getElementsByTagName("td")[1].innerText;
-                console.log(title, goal);
-                titleEdit.value = title;
-                goalEdit.value = goal;
+                reso = tr.getElementsByTagName("td")[0].innerText;
+                completeBy = tr.getElementsByTagName("td")[1].innerText;
+                console.log(reso, completeBy);
+                resoEdit.value = reso;
+                completeByEdit.value = completeBy;
                 idEdit.value = e.target.id;
                 console.log(e.target.id);
                 $('#editModal').modal('toggle');
@@ -249,7 +233,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if (confirm("Are you sure")) {
                     console.log("yes");
-                    window.location = `personal.php?delete=${id}`;
+                    window.location = `timed.php?delete=${id}`;
                 } else {
                     console.log("no");
                 }
