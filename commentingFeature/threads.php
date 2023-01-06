@@ -89,7 +89,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $sql2 = "INSERT INTO threads (t_title, t_desc, t_cat_id) VALUES ('$ques', '$d', '$id')";
     $checking = mysqli_query($conn, $sql2);
     if($checking){
-        echo "Done";
+        echo "<script>alert('Updated')</script>";
+        ?>
+        <meta http-equiv="refresh" content = "0; url = threads.php<?php echo'?cat='.$id;?>"/>
+        <?php
     }
 }
 

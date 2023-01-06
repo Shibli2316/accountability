@@ -85,12 +85,19 @@ if (!$conn) {
         $rply = $_POST['rply'];
         $sql4 = "INSERT INTO `reply` (`t_id`, `t_cat_id`, `reply`) VALUES ('$id', '$catid', '$rply');";
         $inserting = mysqli_query($conn, $sql4);
+        if($inserting){
+            echo "<script>alert('Updated')</script>";
+            ?>
+            <meta http-equiv="refresh" content = "0; url = threadOpen.php<?php echo'?tid='.$id;?>"/>
+            <?php
+        }
         
     }
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF'].'?tid='.$id; ?>" method="post">
 <input type="text" name="rply" id="rply">
 <input type="submit" value="Reply">
+
 </form>
     
     <?php include "partials/_footer.php"; ?>
