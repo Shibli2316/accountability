@@ -8,3 +8,4 @@ People can comment on others and keep them accountable <b>DONE</b><br>
 Add reminders <br>
 Add a perosnal and public blogging/note-making feature <br>
 Make 4 part - in progress, stagnant, done, pending
+people can comment and the comments are in threads to keep track of things
